@@ -32,13 +32,7 @@ async function run(){
       const result = await serviceCollection.insertOne(newServiceadd);
       res.send(result);
     })
-    app.post('/reviews',async(req,res)=>{
-      const reviewadd = req.body;
-      const date = new Date();
-      const newAdd = {...reviewadd,date};
-      const result = await serviceReviews.insertOne(newAdd);
-      res.send(result);
-    })
+    
 
 
     app.get('/reviews',async(req,res)=>{
