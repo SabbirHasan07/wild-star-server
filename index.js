@@ -25,7 +25,13 @@ async function run(){
       const services = await cursor.sort({date:-1}).toArray();
       res.send(services);
     })
-   
+    app.post('/services',async(req,res)=>{
+      const documents = req.body;
+      const date = new Date();
+      const newServiceadd = {...documents,date};
+      const result = await serviceCollection.insertOne(newServiceadd);
+      res.send(result);
+    })
     app.post('/reviews',async(req,res)=>{
       const reviewadd = req.body;
       const date = new Date();
