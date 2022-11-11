@@ -16,7 +16,15 @@ app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_PROFILE}:${process.env.DB_PASSWORD}@cluster0.vcv4qvu.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run(){
-  
+  try{
+    const serviceCollection = client.db('wildstar').collection('services');
+    const serviceReviews = client.db('wildstar').collection('reviews');
+    app.get('/services',async(req,res)=>{
+      const query = {}
+      const cursor = serviceCollection.find(query);
+      const services = await cursor.sort({date:-1}).toArray();
+      res.send(services);
+    })
     app.post('/services',async(req,res)=>{
       const documents = req.body;
       const date = new Date();
